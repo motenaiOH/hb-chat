@@ -69,19 +69,75 @@ var chatComponent = Vue.extend({
     }
 });
 
-var appComponent = Vue.extend({});
+var roomComponent = Vue.extend({
+    template: `
+        <div class="col-md-4" > 
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ chat.teste.length }}        
+                </div>
+                <div class="panel-body">
+                    teste
+                </div>
+            </div>
+            
+        </div>
+        
+                
+            ` ,
+    data: function () {
+        return {
+            user: {
+                email: 'leandro.ribeiro@hbsis.com.br',
+                name: 'Leandro Ribeiro'
+            },
+            chat: {
+                teste: [
+                    {
+                        name: "Fulando",
+                        email: "fulano@gmail.com",
+                        text: "Olá, tudo bom? ",
+                        photo: "http://placehold.it/50/000FFF/fff&text=00"
+                    },
+                    {
+                        email: "leandro.ribeiro@hbsis.com.br",
+                        name: "Atendente",
+                        text: "Tudo ótimo!",
+                        photo: "http://placehold.it/50/FFFFFF/fff&text=EU"
+                    },
+                    {
+                        email: "leandro.ribeiro@hbsis.com.br",
+                        name: "Atendente",
+                        text: "Tudo ótimo!",
+                        photo: "http://placehold.it/50/FFFFFF/fff&text=EU"
+                    }
+                ]
+            }
+        };
+    },
 
-Vue.component('hb-chat', chatComponent);
-
-
-var router = new VueRouter({
-    history:false
-});
-
-router.map({
-    '/chat' : {
-        component: chatComponent
+    methods: {
+        isUser: function(email) {
+            return this.user.email == email;
+        }
     }
 });
 
-router.start(appComponent,"#app");
+const routes = [
+    {
+        path: '/chat',
+        component: chatComponent
+    },
+    {
+        path: '/rooms',
+        component: roomComponent
+    }
+];
+
+const router = new VueRouter({
+    routes
+});
+
+const app = new Vue({
+    router
+}).$mount("#app");
